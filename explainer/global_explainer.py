@@ -22,7 +22,7 @@ class GlobalExplainer:
 
         data = df.to_numpy()[:, :38]
 
-        sample_size = 500
+        sample_size = 100
         idx = np.random.choice(len(data), sample_size, replace=False)
         self.data_sample = data[idx]
 
@@ -46,19 +46,14 @@ class GlobalExplainer:
     def explainer(self, disease):
         print(f"Current disease: {disease}\n")
         self.load_model(disease)
-        self.model_explainer = shap.KernelExplainer(self.model_wrapper, self.background_data)
+        self.model_explainer = shap.KernelExplainer(model=self.model_wrapper, 
+                                                    data=self.background_data,
+                                                    feature_names=self.feature_names)
 
-        shap_values = self.model_explainer.shap_values(self.data_sample)
+        shap_values = self.model_explainer(self.data_sample)
+        shap.plots.beeswarm(shap_values)
 
-        shap.summary_plot(
-            shap_values,
-            self.data_sample,
-            feature_names=self.feature_names,
-            plot_type="bar",
-            show=False
-        )
-
-        plt.savefig(os.path.join("data", "final", "explainer", f"global_explainer_{disease}.png"), dpi=300, bbox_inches='tight')
+        plt.savefig(os.path.join("data", "final", "explainer", f"global_explainer_{disease}_test.png"), dpi=300, bbox_inches='tight')
         plt.close()
 
         print(f"Disease {disease} done.")
@@ -66,8 +61,7 @@ class GlobalExplainer:
 
     
     def explainer_all(self):
-        #for disease in self.target_columns:
-        for disease in ["CHCOCNC1", "CHCCOPD3", "ADDEPEV3", "CHCKDNY2", "HAVARTH4", "DIABETE4"]:
+        for disease in self.target_columns:
             self.explainer(disease)
 
 

@@ -15,6 +15,9 @@ class GlobalExplainer:
         f = open(os.path.join("data", "interim", "target_columns.txt"), "r")
         self.target_columns = f.read().split()
 
+        self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+        print(f"Using device: {self.device}")
+
 
     def load_data(self):
         df = pd.read_csv(os.path.join("data", "interim", "ml_data_final.csv"))
@@ -22,7 +25,7 @@ class GlobalExplainer:
 
         data = df.to_numpy()[:, :38]
 
-        sample_size = 100
+        sample_size = 5
         idx = np.random.choice(len(data), sample_size, replace=False)
         self.data_sample = data[idx]
 
@@ -30,17 +33,20 @@ class GlobalExplainer:
 
 
     def load_model(self, disease):
-        self.model = ResNet(self.data_sample.shape[1], 2)
-        self.model.load_state_dict(torch.load(os.path.join("data", "final", "ml_models", f"final_{disease}.pth")))
+        self.model = ResNet(self.data_sample.shape[1], 2).to(self.device)
+        self.model.load_state_dict(torch.load(
+            os.path.join("data", "final", "ml_models", f"final_{disease}.pth"),
+            map_location=self.device
+        ))
         self.model.eval()
 
 
     def model_wrapper(self, x):
-        x_tensor = torch.tensor(x, dtype=torch.float32)
+        x_tensor = torch.tensor(x, dtype=torch.float32, device=self.device)
         with torch.no_grad():
             logits = self.model(x_tensor)
             probs = F.softmax(logits, dim=1)
-            return probs[:, 1].numpy()
+            return probs[:, 1].detach().cpu().numpy()
         
 
     def explainer(self, disease):
@@ -67,4 +73,4 @@ class GlobalExplainer:
 
 if __name__ == "__main__":
     explainer = GlobalExplainer()
-    explainer.explainer_all()
+    explainer.explainer("CHCOCNC1")

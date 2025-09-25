@@ -1,14 +1,14 @@
-disease,best_model,test_roc,C,activation,solver,learning_rate,learning_rate_init,alpha,n_estimators,max_depth,learning_rate
-BPHIGH6,xgboost, 0.7691085215399757,0.3,relu,adam,constant,0.01,0.01,300,4,0.1
-TOLDHI3,xgboost, 0.6875237997509446,1,logistic,lbfgs,constant,0.0001,0.001,500,5,0.03
-CVDINFR4,lr,0.804677262,1,logistic,adam,constant,0.01,0.1,500,10,0.01
-CVDCRHD4,nn,0.8170929627581055,10,relu,adam,constant,0.01,0.1,300,10,0.03
-CVDSTRK3,nn,0.7908271978583611,0.1,logistic,adam,constant,0.01,0.01,100,8,0.1
-ASTHMA3,xgboost, 0.6774066883608887,1,logistic,lbfgs,constant,0.0001,0.001,300,3,0.03
-CHCSCNC1,xgboost, 0.7259949005672196,0.3,logistic,adam,constant,0.001,0.001,300,8,0.03
-CHCOCNC1,xgboost,0.724295802,0.1,logistic,adam,constant,0.01,0.01,500,5,0.03
-CHCCOPD3,nn,0.8502059938294505,0.1,relu,adam,constant,0.01,0.01,300,10,0.03
-ADDEPEV3,xgboost, 0.8249611412656037,0.1,logistic,adam,constant,0.01,0.001,500,6,0.03
-CHCKDNY2,lr,0.7864358099406347,3,relu,adam,constant,0.01,0.1,150,10,0.03
-HAVARTH4,xgboost, 0.7860878115237935,0.1,logistic,adam,constant,0.01,0.1,150,4,0.1
-DIABETE4,xgboost, 0.8014041937295829,0.1,logistic,adam,constant,0.01,0.1,500,8,0.01
+disease,best_model,test_roc
+BPHIGH6,xgboost, 0.7691085215399757
+TOLDHI3,xgboost, 0.6875237997509446
+CVDINFR4,lr,0.804677262
+CVDCRHD4,nn,0.8170929627581055
+CVDSTRK3,nn,0.7908271978583611
+ASTHMA3,xgboost, 0.6774066883608887
+CHCSCNC1,xgboost, 0.7259949005672196
+CHCOCNC1,xgboost,0.724295802
+CHCCOPD3,nn,0.8502059938294505
+ADDEPEV3,xgboost, 0.8249611412656037
+CHCKDNY2,lr,0.7864358099406347
+HAVARTH4,xgboost, 0.7860878115237935
+DIABETE4,xgboost, 0.8014041937295829

@@ -59,9 +59,9 @@ class LitReview:
 
 class OpenAIResearch:
     def __init__(self):
-        self.df = pd.read_csv(os.path.join("data", "interim", "factor_list_openai.csv"))
-        if "openai" not in self.df.columns:
-            self.df["openai"] = None
+        self.df = pd.read_csv(os.path.join("data", "final", "factor_list_openai.csv"))
+        if "openai_answer" not in self.df.columns:
+            self.df["openai_answer"] = None
 
         self.lit_review = LitReview()
 
@@ -73,9 +73,9 @@ class OpenAIResearch:
 
             print(f"Researching {factor} causing {disease}. Result:\n")
 
-            if pd.isna(row["openai"]):
+            if pd.isna(row["openai_answer"]):
                 result = self.lit_review.process_factor(factor, disease)
-                self.df.at[idx, "openai"] = result
+                self.df.at[idx, "openai_answer"] = result
                 self.save_df()
             else:
                 print("Already done")
@@ -86,7 +86,7 @@ class OpenAIResearch:
 
     
     def save_df(self):
-        self.df.to_csv(os.path.join("data", "interim", "factor_list_openai.csv"), index=False)
+        self.df.to_csv(os.path.join("data", "final", "factor_list_openai.csv"), index=False)
 
 
 
